@@ -8,3 +8,42 @@ export const heroSliderQuery = `
     image
   }
 `;
+
+export const topBarQuery = `*[_type == "topBarInfo"][0] {
+  email,
+  phone,
+  linkedin,
+  facebook,
+  twitter
+}`;
+
+// export const workQuery = `
+//   *[_type == "project"]{
+//     _id,
+//     title,
+//     description,
+//     "image": image.asset->url,
+//     github,
+//     stack
+//   }
+// `;
+
+// lib/queries.js
+export const projectsQuery = `*[_type == "project"]{
+  title,
+  description,
+  github,
+  image {
+    asset -> {
+      url
+    }
+  },
+  stack[]->{
+    name,
+    iconUrl {
+      asset -> {
+        url
+      }
+    }
+  }
+}`;
