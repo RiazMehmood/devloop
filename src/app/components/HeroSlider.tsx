@@ -4,40 +4,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import { client } from "./../../sanity/lib/client";
+import { urlFor } from "./../../sanity/lib/image";
+import { heroSliderQuery } from "./../../sanity/queries";
 
-const images = [
-  {
-    src: "/hero1.jpg",
-    alt: "",
-    title: "Powering Digital Innovation",
-    link: "/about",
-    attribute:
-      'Photo by <a href="https://unsplash.com/@glenncarstenspeters?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Glenn Carstens-Peters</a> on <a href="https://unsplash.com/photos/person-using-macbook-pro-npxXWgQ33ZQ?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Unsplash</a>',
-  },
-  {
-    src: "/hero2.jpg",
-    alt: "Modern UI/UX",
-    title: "Design That Speaks Volumes",
-    link: "/services",
-    attribute:
-      'Photo by <a href="https://unsplash.com/@ilyapavlov?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Ilya Pavlov</a> on <a href="https://unsplash.com/photos/monitor-showing-java-programming-OqtafYT5kTw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Unsplash</a>',
-  },
-  {
-    src: "/hero3.jpg",
-    alt: "Scalable Solutions",
-    title: "Scalable. Secure. Seamless.",
-    link: "/contact",
-    attribute:
-      'Photo by <a href="https://unsplash.com/@kmuza?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Carlos Muza</a> on <a href="https://unsplash.com/photos/laptop-computer-on-glass-top-table-hpjSkU2UYSU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" class="underline hover:text-blue-300">Unsplash</a>',
-  },
-];
+type HeroImage = {
+  _id: string;
+  image: any; // Sanity image object
+  alt: string;
+  title: string;
+  link: string;
+  attribute: string;
+};
+
 
 export default function HeroSlider() {
+  const [images, setImages] = useState<HeroImage[]>([]);
   const [current, setCurrent] = useState(0);
   const [text, setText] = useState("");
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const fetchImages = async () => {
+    const data = await client.fetch(heroSliderQuery);
+    setImages(data);
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const nextSlide = () => {
     setCurrent((prev) => (prev + 1) % images.length);
@@ -66,9 +62,11 @@ export default function HeroSlider() {
   };
 
   useEffect(() => {
-    startSlider();
-    return () => stopSlider();
-  }, []);
+    if (images.length) {
+      startSlider();
+      return () => stopSlider();
+    }
+  }, [images]);
 
   const handlers = useSwipeable({
     onSwipedLeft: nextSlide,
@@ -77,6 +75,8 @@ export default function HeroSlider() {
   });
 
   useEffect(() => {
+    if (!images.length) return;
+
     const title = images[current].title;
     const speed = isDeleting ? 50 : 100;
 
@@ -97,7 +97,9 @@ export default function HeroSlider() {
     }, speed);
 
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, current]);
+  }, [charIndex, isDeleting, current, images]);
+
+  if (!images.length) return <div className="text-white text-center">Loading slides...</div>;
 
   return (
     <div
@@ -108,28 +110,26 @@ export default function HeroSlider() {
     >
       {images.map((image, index) => (
         <div
-          key={index}
+          key={image._id}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
             index === current ? "opacity-100 z-20" : "opacity-0 z-10"
           }`}
         >
           <Image
-            src={image.src}
+            src={urlFor(image.image).url()}
             alt={image.alt}
             fill
             className="object-cover"
             priority={index === 0}
           />
           <div className="absolute inset-0 bg-black/40" />
-          <div className="absolute inset-0  px-4 flex flex-col justify-between items-center text-center">
-            {/* Hero title area */}
+          <div className="absolute inset-0 px-4 flex flex-col justify-between items-center text-center">
             <div className="flex flex-col items-center justify-center flex-grow">
               <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">
                 {text}
                 <span className="animate-pulse">|</span>
               </h1>
             </div>
-            {/* Button and attributes at the bottom */}
             <div className="flex flex-col items-center mt-auto space-y-4 pb-8">
               <Link
                 href={image.link}
