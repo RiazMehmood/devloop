@@ -16,8 +16,8 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-        <Link href="/" className="text-xl font-bold text-blue-600">
-          DevLoop
+        <Link href="/" className="text-xl font-bold text-blue-600 flex items-center">
+          DevL<span className="text-[30px] text-gray-500 leading-none relative top-[2px]">∞</span>p
         </Link>
 
         {/* Desktop Menu */}

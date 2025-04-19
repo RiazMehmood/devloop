@@ -49,23 +49,22 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
         );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <div className="text-center mb-10 max-w-2xl mx-auto">
-        <h2 className="text-4xl mt-2 font-bold mb-3">Our Work</h2>
+      <div className="text-center mb-12 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-3">Our Work</h2>
         <p className="text-gray-600 text-lg">
-          Explore our latest projects built using modern tech stacks. All
-          content is powered by Sanity CMS.
+          Explore our latest projects built using modern tech stacks. All content is powered by Sanity CMS.
         </p>
       </div>
 
       {/* Filter Buttons */}
-      <div className="flex flex-wrap gap-3 justify-center mb-8">
+      <div className="flex flex-wrap gap-3 justify-center mb-10">
         {uniqueStacks.map((stack) => (
           <button
             key={stack}
             onClick={() => setSelectedStack(stack)}
-            className={`px-4 py-1 rounded-full text-sm border ${
+            className={`px-4 py-1 rounded-full text-sm border font-medium ${
               selectedStack === stack
                 ? "bg-black text-white"
                 : "bg-white text-black"
@@ -80,8 +79,8 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {filteredProjects.map((project) => (
           <div
-            key={project._id} 
-            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 cursor-pointer"
+            key={project._id}
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 cursor-pointer overflow-hidden"
             onClick={() => setSelectedProject(project)}
           >
             <img
@@ -90,18 +89,20 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
               className="h-48 w-full object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg font-semibold">{project.title}</h3>
-              <div className="flex flex-wrap gap-2 mt-2">
+              <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                {project.title}
+              </h3>
+              <div className="flex flex-wrap gap-2 mt-2 mb-3">
                 {project.stack.map((tech) => (
-                  <div key={tech._id} className="flex items-center gap-1">
+                  <div key={tech._id} className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
                     {tech.iconUrl?.asset?.url && (
                       <img
                         src={tech.iconUrl.asset.url}
                         alt={tech.name}
-                        className="w-5 h-5 object-contain"
+                        className="w-4 h-4 object-contain"
                       />
                     )}
-                    <span className="text-xs text-gray-600">{tech.name}</span>
+                    <span className="text-xs text-gray-700">{tech.name}</span>
                   </div>
                 ))}
               </div>
@@ -110,7 +111,7 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
                 onClick={(e) => e.stopPropagation()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-blue-600 hover:underline mt-2 text-sm"
+                className="inline-flex items-center gap-1 text-blue-600 hover:underline text-sm"
               >
                 GitHub →
               </a>
@@ -126,8 +127,8 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
         className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       >
         {selectedProject && (
-          <Dialog.Panel className="bg-white rounded-xl shadow-xl max-w-lg p-6 mx-4">
-            <Dialog.Title className="text-2xl font-bold mb-2">
+          <Dialog.Panel className="bg-white rounded-xl shadow-2xl max-w-xl w-full p-6 mx-4 overflow-y-auto max-h-[90vh]">
+            <Dialog.Title className="text-2xl font-bold mb-2 text-gray-900">
               {selectedProject.title}
             </Dialog.Title>
             <img
@@ -135,21 +136,21 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
               alt={selectedProject.title}
               className="rounded mb-4"
             />
-            <p className="text-gray-700 mb-4">
+            <p className="text-gray-700 mb-4 text-sm leading-relaxed">
               {selectedProject.description}
             </p>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-y-4">
               <div className="flex flex-wrap gap-2 items-center">
                 {selectedProject.stack.map((tech) => (
-                  <div key={tech._id} className="flex items-center gap-1">
+                  <div key={tech._id} className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
                     {tech.iconUrl?.asset?.url && (
                       <img
                         src={tech.iconUrl.asset.url}
                         alt={tech.name}
-                        className="w-5 h-5 object-contain"
+                        className="w-4 h-4 object-contain"
                       />
                     )}
-                    <span className="text-xs text-gray-600">{tech.name}</span>
+                    <span className="text-xs text-gray-700">{tech.name}</span>
                   </div>
                 ))}
               </div>

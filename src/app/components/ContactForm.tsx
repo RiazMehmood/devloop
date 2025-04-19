@@ -4,15 +4,37 @@ import { useState } from "react";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // integrate with Sanity form handling or Netlify / Formspree
-    alert("Message sent!");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("Message sent successfully!");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -22,6 +44,7 @@ export default function ContactForm() {
         name="name"
         placeholder="Your Name"
         className="w-full border rounded px-4 py-2"
+        value={form.name}
         onChange={handleChange}
         required
       />
@@ -30,6 +53,7 @@ export default function ContactForm() {
         name="email"
         placeholder="Your Email"
         className="w-full border rounded px-4 py-2"
+        value={form.email}
         onChange={handleChange}
         required
       />
@@ -38,14 +62,16 @@ export default function ContactForm() {
         rows={5}
         placeholder="Your Message"
         className="w-full border rounded px-4 py-2"
+        value={form.message}
         onChange={handleChange}
         required
       />
       <button
         type="submit"
         className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+        disabled={loading}
       >
-        Send Message
+        {loading ? "Sending..." : "Send Message"}
       </button>
     </form>
   );
