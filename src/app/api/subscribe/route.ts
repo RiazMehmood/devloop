@@ -1,24 +1,40 @@
-import { NextResponse } from "next/server";
-import { Twilio } from "twilio";
+import { NextResponse } from 'next/server';
+import { client } from '@/sanity/lib/client'; // Import your sanity client
 
-export async function POST(req: Request) {
-  const { email } = await req.json();
+interface SubscriptionRequest {
+  email: string;
+}
 
-  const client = new Twilio(
-    process.env.TWILIO_ACCOUNT_SID!,
-    process.env.TWILIO_AUTH_TOKEN!
-  );
+interface SubscriptionResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+export async function POST(req: Request): Promise<Response> {
+  const { email }: SubscriptionRequest = await req.json();
 
   try {
-    await client.messages.create({
-      from: process.env.TWILIO_WHATSAPP_FROM!,
-      to: process.env.YOUR_WHATSAPP_TO!,
-      body: `📬 New Newsletter Subscription:\n\n📧 Email: ${email}`,
+    // Save to Sanity
+    await client.create({
+      _type: 'newsletter',
+      email,
     });
 
-    return NextResponse.json({ success: true, message: "Subscribed! You’ll get a WhatsApp alert." });
+    const response: SubscriptionResponse = {
+      success: true,
+      message: 'Subscribed! You’ll receive a confirmation.',
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
-    console.error("WhatsApp error:", error);
-    return NextResponse.json({ error: "Failed to send WhatsApp message" }, { status: 500 });
+    console.error('Sanity error:', error);
+
+    const errorResponse: SubscriptionResponse = {
+      success: false,
+      error: 'Failed to save subscription',
+    };
+
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

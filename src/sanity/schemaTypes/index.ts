@@ -6,7 +6,8 @@ import techStack from '../schemas/techStack'
 import { service } from '../schemas/services'
 import contactMessage from '../schemas/contactMessage'
 import contactInfo from '../schemas/contactInfo'
+import newsletterSchema from '../schemas/newsletter'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [heroImage, topBarInfo, project, techStack, service, contactMessage, contactInfo],
+  types: [heroImage, topBarInfo, project, techStack, newsletterSchema, service, contactMessage, contactInfo],
 }
