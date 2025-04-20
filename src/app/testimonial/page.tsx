@@ -13,7 +13,7 @@ const query = `*[_type == "testimonial"]{
 
 export default async function TestimonialsPage() {
   const testimonials = await client.fetch(query, {}, {
-      next: { revalidate: 60 },});
+      next: { revalidate: 86400 },});
 
   return (
     <main className="bg-white py-20 px-4 sm:px-8 lg:mb-38">

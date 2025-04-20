@@ -5,7 +5,7 @@ import { client } from "./../../sanity/lib/client";
 
 const Footer = async () => {
   const data = await client.fetch(topBarQuery, {}, {
-    next: { revalidate: 60 },});
+    next: { revalidate: 86400 },});
   return <FooterClient data={data} />;
 };
 

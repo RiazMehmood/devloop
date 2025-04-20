@@ -5,7 +5,7 @@ import ServicesClient from "./../components/ServicesClient";
 
 export default async function ServicesSection() {
   const services = await client.fetch(servicesQuery, {}, {
-      next: { revalidate: 60 },});
+      next: { revalidate: 86400 },});
 
   return <ServicesClient services={services} />;
 }

@@ -28,7 +28,7 @@ export default function HeroSlider() {
 
   const fetchImages = async () => {
     const data = await client.fetch(heroSliderQuery, {}, {
-      next: { revalidate: 60 },});
+      next: { revalidate: 86400 },});
     setImages(data);
   };
 

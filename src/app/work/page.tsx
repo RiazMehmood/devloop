@@ -4,7 +4,7 @@ import WorkClient, { Project } from "./../components/WorkClient";
 
 const WorkPage = async () => {
   const projects: Project[] = await client.fetch(projectsQuery, {}, {
-      next: { revalidate: 60 },});
+      next: { revalidate: 86400 },});
 
   return <WorkClient projects={projects} />;
 };
