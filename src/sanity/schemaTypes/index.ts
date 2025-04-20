@@ -7,7 +7,8 @@ import { service } from '../schemas/services'
 import contactMessage from '../schemas/contactMessage'
 import contactInfo from '../schemas/contactInfo'
 import newsletterSchema from '../schemas/newsletter'
+import testimonial from '../schemas/testimonial'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [heroImage, topBarInfo, project, techStack, newsletterSchema, service, contactMessage, contactInfo],
+  types: [heroImage, topBarInfo, project, techStack, newsletterSchema, service, contactMessage, contactInfo, testimonial],
 }

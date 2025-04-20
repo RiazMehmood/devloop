@@ -54,3 +54,14 @@ export const contactInfoQuery = `*[_type == "contactInfo"][0] {
   email,
   address
 }`;
+
+
+// lib/queries.ts
+
+export const testimonialsQuery = `*[_type == "testimonial"]{
+  _id,
+  name,
+  role,
+  quote,
+  "image": image.asset->url
+}`;

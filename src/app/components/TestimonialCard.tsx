@@ -18,8 +18,8 @@ export default function TestimonialCard({
         <Image
           src={testimonial.image}
           alt={testimonial.name}
-          width={50}
-          height={50}
+          width={70}
+          height={70}
           className="rounded-full object-cover"
         />
         <div>
@@ -27,7 +27,7 @@ export default function TestimonialCard({
           <p className="text-sm text-gray-500">{testimonial.role}</p>
         </div>
       </div>
-      <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+      <p className="text-gray-700 italic">'{testimonial.quote}'</p>
     </div>
   );
 }
