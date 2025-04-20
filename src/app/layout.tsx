@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className={quicksand.className}>
       <body>
         <ScrollProvider>
+          
           <TopBar />
           <Navbar />
           <main className="pt-24">{children}</main>
