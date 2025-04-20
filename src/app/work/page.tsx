@@ -3,7 +3,8 @@ import { projectsQuery } from "./../../sanity/queries";
 import WorkClient, { Project } from "./../components/WorkClient";
 
 const WorkPage = async () => {
-  const projects: Project[] = await client.fetch(projectsQuery);
+  const projects: Project[] = await client.fetch(projectsQuery, {}, {
+      next: { revalidate: 60 },});
 
   return <WorkClient projects={projects} />;
 };

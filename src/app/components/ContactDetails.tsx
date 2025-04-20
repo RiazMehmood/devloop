@@ -3,7 +3,8 @@ import { client } from "@/sanity/lib/client";
 import { contactInfoQuery } from "@/sanity/queries";
 
 export default async function ContactDetails() {
-  const contactInfo = await client.fetch(contactInfoQuery);
+  const contactInfo = await client.fetch(contactInfoQuery, {}, {
+    next: {revalidate: 60}});
 
   return (
     <div className="space-y-6">

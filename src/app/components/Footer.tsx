@@ -4,7 +4,8 @@ import FooterClient from "./FooterClient";
 import { client } from "./../../sanity/lib/client";
 
 const Footer = async () => {
-  const data = await client.fetch(topBarQuery);
+  const data = await client.fetch(topBarQuery, {}, {
+    next: { revalidate: 60 },});
   return <FooterClient data={data} />;
 };
 

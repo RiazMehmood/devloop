@@ -4,7 +4,8 @@ import TopBarClient from "./TopBarClient";
 
 
 const TopBar = async () => {
-  const data = await client.fetch(topBarQuery);
+  const data = await client.fetch(topBarQuery, {}, {
+      next: { revalidate: 60 },});
 
   return <TopBarClient data={data} />;
 };

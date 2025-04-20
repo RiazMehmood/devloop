@@ -27,7 +27,8 @@ export default function HeroSlider() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchImages = async () => {
-    const data = await client.fetch(heroSliderQuery);
+    const data = await client.fetch(heroSliderQuery, {}, {
+      next: { revalidate: 60 },});
     setImages(data);
   };
 
