@@ -2,7 +2,15 @@
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 import { useScrollVisibility } from "./ScrollProvider";
 
-const TopBarClient = ({ data }: { data: any }) => {
+interface TopBarData {
+  email: string;
+  phone: string;
+  linkedin: string;
+  facebook: string;
+  twitter: string;
+}
+
+const TopBarClient = ({ data }: { data: TopBarData }) => {
   const isVisible = useScrollVisibility();
 
   return (

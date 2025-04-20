@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { urlFor } from "./../../sanity/lib/image";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types"; // Import SanityImageSource
 
 interface Service {
   _id: string;
@@ -9,7 +10,7 @@ interface Service {
   description: string;
   techStack: {
     name: string;
-    iconUrl: any; // Sanity image object
+    iconUrl: SanityImageSource; // Updated type
   };
 }
 

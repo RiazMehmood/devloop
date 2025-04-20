@@ -7,16 +7,16 @@ import { useSwipeable } from "react-swipeable";
 import { client } from "./../../sanity/lib/client";
 import { urlFor } from "./../../sanity/lib/image";
 import { heroSliderQuery } from "./../../sanity/queries";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 type HeroImage = {
   _id: string;
-  image: any; // Sanity image object
+  image: SanityImageSource; // Updated type
   alt: string;
   title: string;
   link: string;
   attribute: string;
 };
-
 
 export default function HeroSlider() {
   const [images, setImages] = useState<HeroImage[]>([]);
@@ -66,7 +66,7 @@ export default function HeroSlider() {
       startSlider();
       return () => stopSlider();
     }
-  }, [images]);
+  }, [images, startSlider]); // Added `startSlider` to the dependency array
 
   const handlers = useSwipeable({
     onSwipedLeft: nextSlide,

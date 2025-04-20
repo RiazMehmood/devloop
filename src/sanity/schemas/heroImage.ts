@@ -2,7 +2,7 @@ interface HeroImageField {
     name: string;
     title: string;
     type: string;
-    validation?: (Rule: any) => any;
+    validation?: (Rule: { required: () => any }) => unknown; // Replace `any` with `unknown` or a specific type
     options?: {
         hotspot: boolean;
     };

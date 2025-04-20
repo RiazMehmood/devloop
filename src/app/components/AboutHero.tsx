@@ -7,7 +7,7 @@ export default function Hero() {
           Building the Future of the Web
         </h1>
         <p className="text-lg text-white/90 max-w-2xl mx-auto">
-          We craft blazing-fast, scalable, and secure web applications using modern JavaScript frameworks and headless architecture. If you're ready to turn your idea into a digital reality — you're in the right place.
+          We craft blazing-fast, scalable, and secure web applications using modern JavaScript frameworks and headless architecture. If you&apos;re ready to turn your idea into a digital reality — you&apos;re in the right place.
         </p>
       </div>
     </section>

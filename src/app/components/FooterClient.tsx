@@ -4,7 +4,13 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from "react";
 
-const FooterClient = ({ data }: { data: any }) => {
+interface SocialLinks {
+  linkedin: string;
+  facebook: string;
+  twitter: string;
+}
+
+const FooterClient = ({ data }: { data: SocialLinks }) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -35,7 +41,7 @@ const FooterClient = ({ data }: { data: any }) => {
             technologies to stay ahead in a fast-evolving digital world.
             <br />
             <br />
-            Whether you're launching a new product or optimizing an existing system, Devloop
+            Whether you&apos;re launching a new product or optimizing an existing system, Devloop
             delivers solutions that are not only technically strong but also user-centric and
             future-ready.
           </p>

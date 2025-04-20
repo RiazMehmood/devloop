@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import Image from "next/image"; // Import next/image
 
 type TechStack = {
   _id: string;
@@ -83,9 +84,11 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 cursor-pointer overflow-hidden"
             onClick={() => setSelectedProject(project)}
           >
-            <img
+            <Image
               src={project.image.asset.url}
               alt={project.title}
+              width={500}
+              height={300}
               className="h-48 w-full object-cover"
             />
             <div className="p-4">
@@ -96,9 +99,11 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
                 {project.stack.map((tech) => (
                   <div key={tech._id} className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
                     {tech.iconUrl?.asset?.url && (
-                      <img
+                      <Image
                         src={tech.iconUrl.asset.url}
                         alt={tech.name}
+                        width={16}
+                        height={16}
                         className="w-4 h-4 object-contain"
                       />
                     )}
@@ -131,9 +136,11 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
             <Dialog.Title className="text-2xl font-bold mb-2 text-gray-900">
               {selectedProject.title}
             </Dialog.Title>
-            <img
+            <Image
               src={selectedProject.image.asset.url}
               alt={selectedProject.title}
+              width={800}
+              height={600}
               className="rounded mb-4"
             />
             <p className="text-gray-700 mb-4 text-sm leading-relaxed">
@@ -144,9 +151,11 @@ const WorkClient: React.FC<{ projects: Project[] }> = ({ projects }) => {
                 {selectedProject.stack.map((tech) => (
                   <div key={tech._id} className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
                     {tech.iconUrl?.asset?.url && (
-                      <img
+                      <Image
                         src={tech.iconUrl.asset.url}
                         alt={tech.name}
+                        width={16}
+                        height={16}
                         className="w-4 h-4 object-contain"
                       />
                     )}

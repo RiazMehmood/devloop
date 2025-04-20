@@ -1,5 +1,5 @@
-// /schemas/contactMessage.ts
-export default {
+
+const contactMessageSchema = {
   name: 'contactMessage',
   title: 'Contact Message',
   type: 'document',
@@ -27,3 +27,6 @@ export default {
     },
   ],
 };
+
+// Export the schema object
+export default contactMessageSchema;

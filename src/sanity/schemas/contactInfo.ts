@@ -1,4 +1,4 @@
-export default {
+const contactInfoSchema = {
   name: "contactInfo",
   title: "Contact Info",
   type: "document",
@@ -20,3 +20,5 @@ export default {
     },
   ],
 };
+
+export default contactInfoSchema;
